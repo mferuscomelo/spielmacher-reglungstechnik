@@ -10,19 +10,22 @@ class Move(Enum):
 
 class Player(ABC):
     score: int
-    history: list[Move]
+    move_history: list[Move]
+    score_history: list[int]
 
     def __init__(self):
         self.score: int = 0
-        self.history: list[Move] = []
+        self.move_history: list[Move] = []
+        self.score_history: list[int] = [0]
 
     def play(self, opponent_history: list[Move]) -> None:
         move = self._play_move(opponent_history)
-        self.history.append(move)
+        self.move_history.append(move)
         return move
 
     def update_score(self, score: int) -> None:
         self.score += score
+        self.score_history.append(self.score)
 
     def print_moves(self) -> None:
         styled_history = [
@@ -31,7 +34,7 @@ class Player(ABC):
                 if move == Move.COOPERATE
                 else f"\033[91m{move.value}\033[0m"
             )
-            for move in self.history
+            for move in self.move_history
         ]
         print(f"{self.__class__.__name__:<25} {' '.join(styled_history)}")
 

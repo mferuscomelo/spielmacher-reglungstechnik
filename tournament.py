@@ -24,3 +24,5 @@ class Tournament:
                 p1.print_moves()
                 p2.print_moves()
                 print(f"Winner: {winner.__class__.__name__}")
+
+                game.plot_scores()
