@@ -9,6 +9,7 @@ type ScoreHistory = list[list[Move]]
 class Move(Enum):
     COOPERATE = "C"
     DEFECT = "D"
+    EMPTY = "E"
 
 
 class Player(ABC):
@@ -97,7 +98,7 @@ class RandomPlayer(Player):
     name: str = "RandomPlayer"
 
     def select_move(self, opponent_history: list[Move]) -> Move:
-        return random.choice(list(Move))
+        return random.choice([Move.COOPERATE, Move.DEFECT])
 
 
 class GrudgerPlayer(Player):
