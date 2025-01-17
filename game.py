@@ -72,7 +72,7 @@ class Game:
             p2_score = p2_scores[round_index]
 
             rects = ax.bar(
-                [self.__p1.__class__.__name__, self.__p2.__class__.__name__],
+                [self.__p1.name, self.__p2.name],
                 [p1_score, p2_score],
             )
             ax.bar_label(rects, padding=3)

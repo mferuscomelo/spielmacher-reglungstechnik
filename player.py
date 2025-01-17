@@ -17,6 +17,7 @@ class Player(ABC):
     num_games: int
     move_history: MoveHistory
     score_history: ScoreHistory
+    name: str = "GenericPlayer"
 
     @property
     def current_move_history(self) -> list[Move]:
@@ -64,7 +65,7 @@ class Player(ABC):
             )
             for move in self.move_history[self.num_games]
         ]
-        print(f"{self.__class__.__name__:<25} {' '.join(styled_history)}")
+        print(f"{self.name:<25} {' '.join(styled_history)}")
 
     @abstractmethod
     def _select_move(self, opponent_history: list[Move]) -> Move:
@@ -76,14 +77,18 @@ class CooperativePlayer(Player):
     Always cooperates.
     """
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    name: str = "CooperativePlayer"
+
         return Move.COOPERATE
 
 
 class EgoisticPlayer(Player):
-    """ """
+    """
+    Always defects
+    """
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    name: str = "EgoisticPlayer"
+
         return Move.DEFECT
 
 
@@ -92,7 +97,8 @@ class RandomPlayer(Player):
     Chooses moves randomly between cooperate and egoistic.
     """
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    name: str = "RandomPlayer"
+
         return random.choice(list(Move))
 
 
@@ -101,7 +107,8 @@ class GrudgerPlayer(Player):
     Cooperates until the opponent defects, then always defects.
     """
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    name: str = "GrudgerPlayer"
+
         return Move.DEFECT if Move.DEFECT in opponent_history else Move.COOPERATE
 
 
@@ -110,6 +117,7 @@ class DetectivePlayer(Player):
     Cooperates until the opponent defects twice in a row, then always defects.
     """
 
+    name: str = "DetectivePlayer"
     defect: bool = False
 
     def _select_move(self, opponent_history: list[Move]) -> Move:
@@ -133,7 +141,8 @@ class TitForTatPlayer(Player):
     Cooperates at first, then plays the opponent's last move.
     """
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    name: str = "TitForTatPlayer"
+
         return Move.COOPERATE if not opponent_history else opponent_history[-1]
 
 
@@ -142,6 +151,7 @@ class ForgivingTitForTatPlayer(Player):
     Cooperates until the opponent defects, then a 10% chance to forgive a defect
     """
 
+    name: str = "ForgivingTitForTatPlayer"
     FORGIVE_PROBABILITY: int = 0.1  # 10% chance to forgive
 
     def _select_move(self, opponent_history: list[Move]) -> Move:
@@ -161,6 +171,7 @@ class SimpletonPlayer(Player):
     Cooperates on the first round. If opponent cooperates, the player repeats its last move. If the opponent defects, the player switches its last move.
     """
 
+    name: str = "SimpletonPlayer"
     last_move: Move = Move.COOPERATE
 
     def _select_move(self, opponent_history: list[Move]) -> Move:

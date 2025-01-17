@@ -20,9 +20,9 @@ class Tournament:
                 winner = game.run()
                 scores = game.get_scores()
 
-                print(f"{p1.__class__.__name__} vs {p2.__class__.__name__}: {scores}")
+                print(f"{p1.name} vs {p2.name}: {scores}")
                 p1.print_moves()
                 p2.print_moves()
-                print(f"Winner: {winner.__class__.__name__}")
+                print(f"Winner: {winner.name}")
 
                 game.plot_scores()
