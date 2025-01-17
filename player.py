@@ -216,3 +216,25 @@ class EveryNthDefectorPlayer(Player):
             if len(self.current_move_history) % self.n == 0
             else Move.COOPERATE
         )
+
+
+class HumanPlayer(Player):
+    """
+    Human player that selects moves manually.
+    """
+
+    name: str = "HumanPlayer"
+
+    def select_move(self, opponent_history: list[Move]) -> Move:
+        while True:
+            move = (
+                input("Enter your move (C for Cooperate, D for Defect): ")
+                .strip()
+                .upper()
+            )
+            if move == "C":
+                return Move.COOPERATE
+            elif move == "D":
+                return Move.DEFECT
+            else:
+                print("Invalid input. Please enter 'C' or 'D'.")
