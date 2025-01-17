@@ -111,8 +111,8 @@ class Game:
 
     def __play_round(self) -> None:
         # Step 1: Get moves from players
-        move1 = self.__p1.play(self.__p2.current_move_history)
-        move2 = self.__p2.play(self.__p1.current_move_history)
+        move1 = self.__p1.select_move(self.__p2.current_move_history)
+        move2 = self.__p2.select_move(self.__p1.current_move_history)
 
         # Step 2: Apply potential mistakes in communication
         self.__apply_mistake(move1)

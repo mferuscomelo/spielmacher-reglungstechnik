@@ -22,7 +22,7 @@ class Player(ABC):
     @property
     def current_move_history(self) -> list[Move]:
         return self.move_history[self.num_games]
-    
+
     @property
     def last_move(self) -> Move:
         return self.current_move_history[-1]
@@ -51,11 +51,6 @@ class Player(ABC):
         self.score_history[self.num_games] = []
         self.move_history[self.num_games] = []
 
-    def play(self, opponent_history: list[Move]) -> None:
-        move = self._select_move(opponent_history)
-        self.move_history.append(move)
-        return move
-
     def print_moves(self) -> None:
         styled_history = [
             (
@@ -68,7 +63,7 @@ class Player(ABC):
         print(f"{self.name:<25} {' '.join(styled_history)}")
 
     @abstractmethod
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    def select_move(self, opponent_history: list[Move]) -> Move:
         pass
 
 
@@ -79,6 +74,7 @@ class CooperativePlayer(Player):
 
     name: str = "CooperativePlayer"
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         return Move.COOPERATE
 
 
@@ -89,6 +85,7 @@ class EgoisticPlayer(Player):
 
     name: str = "EgoisticPlayer"
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         return Move.DEFECT
 
 
@@ -99,6 +96,7 @@ class RandomPlayer(Player):
 
     name: str = "RandomPlayer"
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         return random.choice(list(Move))
 
 
@@ -109,6 +107,7 @@ class GrudgerPlayer(Player):
 
     name: str = "GrudgerPlayer"
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         return Move.DEFECT if Move.DEFECT in opponent_history else Move.COOPERATE
 
 
@@ -124,6 +123,7 @@ class DetectivePlayer(Player):
         super().reset()
         self.defect = False
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         move = Move.COOPERATE
 
         if self.defect:
@@ -146,6 +146,7 @@ class TitForTatPlayer(Player):
 
     name: str = "TitForTatPlayer"
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         return Move.COOPERATE if not opponent_history else opponent_history[-1]
 
 
@@ -157,7 +158,7 @@ class ForgivingTitForTatPlayer(Player):
     name: str = "ForgivingTitForTatPlayer"
     FORGIVE_PROBABILITY: int = 0.1  # 10% chance to forgive
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    def select_move(self, opponent_history: list[Move]) -> Move:
         if not opponent_history:
             return Move.COOPERATE
         elif (
@@ -181,6 +182,7 @@ class SimpletonPlayer(Player):
         super().reset()
         self.last_move = Move.COOPERATE
 
+    def select_move(self, opponent_history: list[Move]) -> Move:
         move = Move.COOPERATE
 
         if not opponent_history:
