@@ -9,6 +9,7 @@ from player import (
     TitForTatPlayer,
     ForgivingTitForTatPlayer,
     SimpletonPlayer,
+    EveryNthDefectorPlayer,
 )
 from game import Game, GameConfig
 
@@ -23,6 +24,10 @@ p1s: list[Player] = [
     TitForTatPlayer(),
     ForgivingTitForTatPlayer(),
     SimpletonPlayer(),
+    EveryNthDefectorPlayer(2),
+    EveryNthDefectorPlayer(3),
+    EveryNthDefectorPlayer(4),
+    EveryNthDefectorPlayer(5),
 ]
 
 p2s: list[Player] = [
@@ -34,6 +39,10 @@ p2s: list[Player] = [
     TitForTatPlayer(),
     ForgivingTitForTatPlayer(),
     SimpletonPlayer(),
+    EveryNthDefectorPlayer(2),
+    EveryNthDefectorPlayer(3),
+    EveryNthDefectorPlayer(4),
+    EveryNthDefectorPlayer(5),
 ]
 
 for p1 in p1s:
