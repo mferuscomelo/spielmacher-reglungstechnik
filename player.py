@@ -2,6 +2,11 @@ import random
 from enum import Enum
 from abc import ABC, abstractmethod
 
+import joblib
+import numpy as np
+from sklearn.calibration import LabelEncoder
+from sklearn.ensemble import RandomForestClassifier
+
 type MoveHistory = list[list[Move]]
 type ScoreHistory = list[list[Move]]
 
@@ -238,3 +243,36 @@ class HumanPlayer(Player):
                 return Move.DEFECT
             else:
                 print("Invalid input. Please enter 'C' or 'D'.")
+
+
+class SimulatedPlayer(Player):
+    """
+    Simulated player that selects moves based on a pre-trained model.
+    """
+
+    name: str = "SimulatedPlayer"
+    model: RandomForestClassifier
+    encoder: LabelEncoder
+
+    def __init__(self, model_path: str, encoder_path: str):
+        super().__init__()
+        self.model = joblib.load(model_path)
+        self.encoder = joblib.load(encoder_path)
+
+    def select_move(self, opponent_history: list[Move]) -> Move:
+        player_history = self.__transform_history(self.current_move_history)
+        opponent_history = self.__transform_history(opponent_history)
+
+        model_input = np.concat([player_history, opponent_history])
+
+        prediction = self.model.predict([model_input])[0]
+        predicted_move = self.encoder.inverse_transform([prediction])[0]
+        return Move(predicted_move)
+
+    def __transform_history(self, history: list[Move]) -> list[int]:
+        transformed = [move.value for move in history]
+        # TODO: remove magic number 10
+        transformed += [Move.EMPTY.value] * (
+            10 - len(transformed)
+        )  # Pad the list to the required length
+        return self.encoder.transform(transformed)
