@@ -254,10 +254,10 @@ class SimulatedPlayer(Player):
     model: RandomForestClassifier
     encoder: LabelEncoder
 
-    def __init__(self, model_path: str, encoder_path: str):
+    def __init__(self, model_path: str):
         super().__init__()
         self.model = joblib.load(model_path)
-        self.encoder = joblib.load(encoder_path)
+        self.encoder = LabelEncoder().fit([move.value for move in Move])
 
     def select_move(self, opponent_history: list[Move]) -> Move:
         player_history = self.__transform_history(self.current_move_history)
