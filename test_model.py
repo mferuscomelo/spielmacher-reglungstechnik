@@ -1,41 +1,28 @@
-import joblib
-
 from game import Game, GameConfig
 from player import (
     Player,
-    CooperativePlayer,
-    EgoisticPlayer,
     RandomPlayer,
-    GrudgerPlayer,
-    DetectivePlayer,
-    TitForTatPlayer,
-    ForgivingTitForTatPlayer,
-    SimpletonPlayer,
-    EveryNthDefectorPlayer,
     SimulatedPlayer,
 )
 
-MODEL_NAME = "base_rfc"
+MODEL_NAME = "GrudgerPlayer_base_dt"
 NUM_ROUNDS = 10
 
 MODEL_DIR = "models"
-ENCODER_DIR = f"{MODEL_DIR}/encoder.joblib"
 model_path = f"{MODEL_DIR}/{MODEL_NAME}.joblib"
 
-p1 = SimulatedPlayer(model_path, ENCODER_DIR)
+p1 = SimulatedPlayer(model_path)
 players: list[Player] = [
-    CooperativePlayer(),
-    EgoisticPlayer(),
     RandomPlayer(),
-    GrudgerPlayer(),
-    DetectivePlayer(),
-    TitForTatPlayer(),
-    ForgivingTitForTatPlayer(),
-    SimpletonPlayer(),
-    EveryNthDefectorPlayer(2),
-    EveryNthDefectorPlayer(3),
-    EveryNthDefectorPlayer(4),
-    EveryNthDefectorPlayer(5),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
+    RandomPlayer(),
 ]
 
 for p2 in players:
