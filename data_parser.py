@@ -1,3 +1,4 @@
+import os
 import csv
 from player import Move, Player
 
@@ -35,6 +36,9 @@ class DataParser:
         )  # Pad the list to the required length
 
     def __write_to_file(self, filename: str, data: list):
+        if not os.path.exists("data"):
+            os.makedirs("data")
+
         with open(f"data/{filename}.csv", mode="a", newline="") as file:
             writer = csv.writer(file)
             if file.tell() == 0:
