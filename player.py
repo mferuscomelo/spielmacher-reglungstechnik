@@ -120,7 +120,10 @@ class DetectivePlayer(Player):
     name: str = "DetectivePlayer"
     defect: bool = False
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    def reset(self):
+        super().reset()
+        self.defect = False
+
         move = Move.COOPERATE
 
         if self.defect:
@@ -174,7 +177,10 @@ class SimpletonPlayer(Player):
     name: str = "SimpletonPlayer"
     last_move: Move = Move.COOPERATE
 
-    def _select_move(self, opponent_history: list[Move]) -> Move:
+    def reset(self):
+        super().reset()
+        self.last_move = Move.COOPERATE
+
         move = Move.COOPERATE
 
         if not opponent_history:
