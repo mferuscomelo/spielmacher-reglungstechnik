@@ -192,3 +192,24 @@ class SimpletonPlayer(Player):
 
         self.last_move = move
         return move
+
+
+class EveryNthDefectorPlayer(Player):
+    """
+    Defects every nth turn.
+    """
+
+    name: str = "EveryNthDefectorPlayer"
+    n: int
+
+    def __init__(self, n: int):
+        self.n = n
+        self.name = f"EveryNthDefectorPlayer_{n}"
+        super().__init__()
+
+    def select_move(self, opponent_history: list[Move]) -> Move:
+        return (
+            Move.DEFECT
+            if len(self.current_move_history) % self.n == 0
+            else Move.COOPERATE
+        )
