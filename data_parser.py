@@ -23,6 +23,8 @@ class DataParser:
         p1_history = self.__transform_input(p1.current_move_history)
         p2_history = self.__transform_input(p2.current_move_history)
 
+        # output_data = MOVE_VALUES.get(p1.last_move)
+        output_data = p1.last_move.name
         data = self.__input_data + [output_data] + [p2.name]
         self.__write_to_file(p1.name, data)
 
