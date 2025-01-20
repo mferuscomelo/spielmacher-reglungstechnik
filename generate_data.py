@@ -1,5 +1,5 @@
 from data_parser import DataParser
-from player import (
+from spielmacher.player import (
     Player,
     CooperativePlayer,
     EgoisticPlayer,
@@ -11,7 +11,7 @@ from player import (
     SimpletonPlayer,
     EveryNthDefectorPlayer,
 )
-from game import Game, GameConfig
+from spielmacher.game import Game, GameConfig
 
 NUM_ROUNDS: int = 10
 
@@ -57,7 +57,7 @@ for p1 in p1s:
     for p2 in p2s:
         parser = DataParser(NUM_ROUNDS)
 
-        config = GameConfig(p1, p2, NUM_ROUNDS, 0.0)
+        config = GameConfig(p1, p2, NUM_ROUNDS)
         game = Game(config)
         game.run(parser.save)
 

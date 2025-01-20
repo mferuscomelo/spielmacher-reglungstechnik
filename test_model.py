@@ -1,5 +1,5 @@
-from game import Game, GameConfig
-from player import (
+from spielmacher.game import Game, GameConfig
+from spielmacher.player import (
     Player,
     RandomPlayer,
     SimulatedPlayer,

@@ -1,6 +1,7 @@
 import os
 import csv
-from player import Move, Player
+from spielmacher.player import Move, Player
+
 
 class DataParser:
     __num_rounds: int
