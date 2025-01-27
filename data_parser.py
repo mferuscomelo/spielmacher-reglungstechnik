@@ -14,7 +14,7 @@ class DataParser:
         self.__columns = (
             [f"p1_{i+1}" for i in range(num_rounds)]
             + [f"p2_{i+1}" for i in range(num_rounds)]
-            + ["move", "opponent"]
+            + ["move"]
         )
 
     def save(self, p1: Player, p2: Player) -> None:
@@ -22,7 +22,7 @@ class DataParser:
         p2_history = self.__transform_input(p2.current_move_history)
 
         output_data = p1.last_move.value
-        data = self.__input_data + [output_data] + [p2.name]
+        data = self.__input_data + [output_data]
         self.__write_to_file(p1.name, data)
 
         # Reset the input data
