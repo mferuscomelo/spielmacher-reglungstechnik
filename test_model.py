@@ -5,7 +5,7 @@ from spielmacher.player import (
     SimulatedPlayer,
 )
 
-MODEL_NAME = "GrudgerPlayer_base_dt"
+MODEL_NAME = "TitForTatPlayer_base_svm"
 NUM_ROUNDS = 10
 
 MODEL_DIR = "models"
